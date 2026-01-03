@@ -82,6 +82,12 @@ class hero:
             hero_stats[stat] += bonus
         return hero_stats #change stats to be returned as a dictionary not a string
 
+    def cast_spell(self, spell,target):
+        pass
+
+    def take_damge(self,amount):
+        pass
+
     #seperated where stats are shown
     def show_stats(self):
         return (
