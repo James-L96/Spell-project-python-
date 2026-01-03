@@ -60,7 +60,12 @@ class hero:
             self.name = name
             self.race = race.lower()
             self.role = role.lower()
+            
             self.stats = self.generate_stats()
+
+            self.health = self.stats["health"]
+            self.mana = self.stats["mana"]
+            self.speed = self.stats["speed"]
 
     def generate_stats(self):  
         hero_stats = {}
@@ -75,15 +80,27 @@ class hero:
         role_bonus = self.class_stats.get(self.role, {})
         for stat, bonus in role_bonus.items():
             hero_stats[stat] += bonus
-        return(f'Theses are you {hero_stats} as a {self.race} {self.role}')
+        return hero_stats #change stats to be returned as a dictionary not a string
+
+    #seperated where stats are shown
+    def show_stats(self):
+        return (
+            f"Health: {self.health}\n"
+            f"Mana: {self.mana}\n"
+            f"Speed: {self.speed}"
+        )
 
     def new_char(self):
             return f"{self.name}. you are the {self.race.title()} people who excel in {self.role} combat!"
 
 
+
 my_hero = hero('Draven','Human','Mage')
-print(my_hero.generate_stats())
+
 print(my_hero.new_char())
+print(my_hero.show_stats())
+
+
 # while True:
     # Prompt the user to input a spell name
     #userInput = input("Input the spell name (or type 'end ritual' to finish): ")
