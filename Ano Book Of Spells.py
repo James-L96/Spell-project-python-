@@ -1,6 +1,29 @@
 import random
 
 
+
+class item:
+    weapons = {'swords': {'Wood Sword': {'atk': 9, 'spd':7}},
+    'mace': {'Rusted Morning Star':{'atk': 10, 'spd':7}},
+    'hammer': {'Old Harold': {'atk':15, 'spd':4}},
+    'bows':{'Swan Song': {'atk':10, 'spd':10  } },
+    'wands': {'Tissle': {'atk':9, 'spd': 9}},
+    }
+    
+    armor = {
+    'helmets': {'basic helm':{'def':5}},
+    'chest': {'basic chest':{'def':7}},
+    'arms': {'basic gloves':{'def':4, 'spd':4,'eva':3}},
+    'feet': {'leath boots':{'def':3, 'spd':6, 'eva':5}},
+    'shield':{'wooden shield'{'def':6}},
+    'ring': {'fire ring':{'fire damage': 7}}
+    }
+    def __init__(self):
+        pass
+class inventory_:
+    def __init__(self):
+        pass
+
 # Initialize an empty dictionary to store spell names and their corresponding elements
 class spell:
     valid_elements = \
@@ -13,7 +36,7 @@ class spell:
         self.name = name
         self.element = element.lower() 
         if self.element.lower() in self.valid_elements.keys():
-            element_data = self.valid_elements[self.element]
+            self.element_data = self.valid_elements[self.element]
             self.strength = self.valid_elements[self.element]['strength']
             self.weakness = self.valid_elements[self.element]['weakness'] 
         else:
@@ -44,16 +67,16 @@ class hero:
     #bonus stats
     base_stats = \
         {
-        'elf': {'health': (60, 80), 'speed':(90, 100), 'mana':(80,90)},
-        'human':{'health': (80,90), 'speed':(75,80), 'mana':(80,100)},
-        'dwarf':{'health': (90,115), 'speed':(50,70), 'mana': (50,70)}
+        'elf': {'health': (60, 80), 'attack':(25,40),'speed':(50, 65), 'mana':(80,90),'defense':(20,40),'evasion':(0,0)},
+        'human':{'health': (80,90), 'attack':(25,40),'speed':(45,60), 'mana':(80,100),'defense':(30,50),'evasion':(0,0)},
+        'dwarf':{'health': (90,115),'attack':(25,40), 'speed':(30,50), 'mana': (50,70),'defense':(40,60),'evasion':(0,0)}
         }
 
     class_stats = \
         {
-        'fighter': {'health':(+25), 'speed':(+5), 'mana':(-10)},
-        'ranger': {'health':(+5), 'speed':(+12), 'mana':(+5)},
-        'mage': {'health':(0), 'speed':(-5), 'mana':(+20)}
+        'fighter': {'health':(.15),'attack':(.15), 'speed':(.05), 'mana':(-.05),'defense':(.10),'evasion':(.2)},
+        'ranger': {'health':(.05),'attack':(.15), 'speed':(.01), 'mana':(.05),'defense':(.05),'evasion':(.3)},
+        'mage': {'health':(0),'attack':(.15), 'speed':(-.05), 'mana':(.20),'defense':(0),'evasion':(.1)}
         
         }
     def __init__(self, name, race, role):
@@ -64,8 +87,14 @@ class hero:
             self.stats = self.generate_stats()
 
             self.health = self.stats["health"]
+            self.attack = self.stats["attack"]
             self.mana = self.stats["mana"]
             self.speed = self.stats["speed"]
+            base_evasion = self.stats["evasion"]   # like 0.005 = 0.5%
+            speed_bonus = self.speed * 0.002
+
+            self.evasion = min(round(base_evasion + speed_bonus, 2), 0.35)
+            
 
     def generate_stats(self):  
         hero_stats = {}
@@ -82,22 +111,32 @@ class hero:
             hero_stats[stat] += bonus
         return hero_stats #change stats to be returned as a dictionary not a string
 
-    def cast_spell(self, spell,target):
+    def cast_spell(self, spell,target): 
+        self.spell = spell
+        self.target = target
+        pass
+
+    def damage_reduction(self, enemy):
+        self.damage_taken = min(1,self.generate_stats['defense'] /100 )
         pass
 
     def take_damge(self,amount):
-        pass
+        self.health = max(0, self.health - amount)
+        return self.health
 
     #seperated where stats are shown
     def show_stats(self):
         return (
             f"Health: {self.health}\n"
+            f"Attack: {self.attack}\n"
             f"Mana: {self.mana}\n"
-            f"Speed: {self.speed}"
+            f"Speed: {self.speed}\n"
+            f"Evasion: {self.evasion}"
         )
 
     def new_char(self):
             return f"{self.name}. you are the {self.race.title()} people who excel in {self.role} combat!"
+    
 
 
 
