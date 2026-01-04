@@ -2,7 +2,7 @@ import random
 
 
 
-class item:
+class Item:
     weapons = {'swords': {'Wood Sword': {'atk': 9, 'spd':7}},
     'mace': {'Rusted Morning Star':{'atk': 10, 'spd':7}},
     'hammer': {'Old Harold': {'atk':15, 'spd':4}},
@@ -15,7 +15,7 @@ class item:
     'chest': {'basic chest':{'def':7}},
     'arms': {'basic gloves':{'def':4, 'spd':4,'eva':3}},
     'feet': {'leath boots':{'def':3, 'spd':6, 'eva':5}},
-    'shield':{'wooden shield'{'def':6}},
+    'shield':{'wooden shield':{'def':6}},
     'ring': {'fire ring':{'fire damage': 7}}
     }
     def __init__(self):
@@ -25,7 +25,7 @@ class inventory_:
         pass
 
 # Initialize an empty dictionary to store spell names and their corresponding elements
-class spell:
+class Spell:
     valid_elements = \
     {
         'fire': {'strength': 'ice', 'weakness': 'earth'},
@@ -46,10 +46,10 @@ class spell:
     def use_spell(self):
         return f"You cast {self.name} and it is weak against {self.weakness}"
 
-my_attack = spell("Fireball","Fire")
+my_attack = Spell("Fireball","Fire")
 print(my_attack.use_spell())
 
-class hero:
+class Hero:
     legend = \
     {
         'elf': {'strength': 'ice', 'weakness': 'fire'},
@@ -117,7 +117,7 @@ class hero:
         pass
 
     def damage_reduction(self, enemy):
-        self.damage_taken = min(1,self.generate_stats['defense'] /100 )
+        self.damage_taken = min(1,self.stats['defense'] /100 )
         pass
 
     def take_damge(self,amount):
@@ -125,7 +125,7 @@ class hero:
         return self.health
 
     #seperated where stats are shown
-    def show_stats(self):
+    def __str__(self):
         return (
             f"Health: {self.health}\n"
             f"Attack: {self.attack}\n"
@@ -137,13 +137,18 @@ class hero:
     def new_char(self):
             return f"{self.name}. you are the {self.race.title()} people who excel in {self.role} combat!"
     
+    def __repr__(self):
+            return f"Hero(name='{self.name}', race='{self.race}', role='{self.role}')"
+    
 
 
 
-my_hero = hero('Draven','Human','Mage')
+my_hero = Hero('Draven','Human','Mage')
 
 print(my_hero.new_char())
-print(my_hero.show_stats())
+repr(my_hero)
+print(my_hero)
+
 
 
 # while True:
