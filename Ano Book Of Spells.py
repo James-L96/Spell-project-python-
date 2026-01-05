@@ -1,13 +1,60 @@
 import random
 
+class MonsterDB:
+    orcs = {
+        'Kid Orc': {
+            'health': 9, 'speed': 7, 'atk': 7,
+            'mana': 20, 'def': 5, 'eva': 7
+        },
+        'Orc Warrior': {
+            'health': 15, 'speed': 5, 'atk': 12,
+            'mana': 5, 'def': 8, 'eva': 4
+        }
+    }
 
+    bandits = {
+        'Bandit Thug': {
+            'health': 10, 'speed': 8, 'atk': 6,
+            'def': 4, 'eva': 6
+        }
+    }
 
-class Item:
-    weapons = {'swords': {'Wood Sword': {'atk': 9, 'spd':7}},
-    'mace': {'Rusted Morning Star':{'atk': 10, 'spd':7}},
-    'hammer': {'Old Harold': {'atk':15, 'spd':4}},
-    'bows':{'Swan Song': {'atk':10, 'spd':10  } },
-    'wands': {'Tissle': {'atk':9, 'spd': 9}},
+    dryads = {
+        'Forest Dryad': {
+            'health': 12, 'speed': 9, 'atk': 5,
+            'mana': 30, 'def': 3, 'eva': 9
+        }
+    }
+
+def spawn_monster(species):
+    pool = getattr(MonsterDB, species)   # orcs, bandits, etc.
+    if pool is None:
+            print("Unknown Species")
+    name, stats = random.choice(list(pool.items()))
+    return Monster(name, species, stats)
+
+class Monster:
+    def __init__(self, name, stats):
+        self.name = name
+        self.max_health = stats['health']
+        self.health = stats['health']
+        self.stats = stats
+
+    def __repr__(self):
+        return f"{self.name} (HP: {self.health}/{self.max_health})"
+
+#Items Database
+class ItemDB:
+    weapons = {'swords': {'Wood Sword': 
+            {'atk': 9, 'spd':7}},
+    'mace': {'Rusted Morning Star':
+            {'atk': 10, 'spd':7}},
+    'hammer': {'Old Harold': 
+            {'atk':15, 'spd':4}},
+    'bows':{'Swan Song': 
+            {'atk':10, 'spd':10  } },
+    'wands': {'Tissle': 
+            {'atk':9, 'spd': 9}},
     }
     
     armor = {
@@ -18,11 +65,38 @@ class Item:
     'shield':{'wooden shield':{'def':6}},
     'ring': {'fire ring':{'fire damage': 7}}
     }
+
+#class to hold a item
+class Item:
+    def __init__(self, name, slot, stats):
+        self.name = name
+        self.slot = slot   # helmet, weapon, etc.
+        self.stats = stats
+
+    def __repr__(self):
+        return f"{self.name} ({self.stats})"
+class Inventory:
+    invetory_slots = {}
     def __init__(self):
-        pass
-class inventory_:
-    def __init__(self):
-        pass
+        self.slots ={
+        'helmet' == None,
+        'chest' == None,
+        'arms' == None,
+        'feet' == None,
+        'shield' == None,
+        'ring' == None
+    }
+    
+    def equip(self, item):
+        if item.slot in self.slots:
+            self.slots[item.slot] = item
+        else:
+            print("Invalid slot")
+    
+    def show_equipment(self):
+        for slot, item in self.slots.items():
+            print(f"{slot}: {item}")
+
 
 # Initialize an empty dictionary to store spell names and their corresponding elements
 class Spell:
@@ -149,7 +223,9 @@ print(my_hero.new_char())
 repr(my_hero)
 print(my_hero)
 
-
+class Enemy:
+    def __init__(self, monster,):
+        pass
 
 # while True:
     # Prompt the user to input a spell name
