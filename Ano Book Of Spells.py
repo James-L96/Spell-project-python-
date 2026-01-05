@@ -220,8 +220,8 @@ class Hero:
 my_hero = Hero('Draven','Human','Mage')
 
 print(my_hero.new_char())
-repr(my_hero)
 print(my_hero)
+
 
 class Enemy:
     def __init__(self, monster,):
