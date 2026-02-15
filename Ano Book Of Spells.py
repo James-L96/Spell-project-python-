@@ -79,12 +79,12 @@ class Inventory:
     invetory_slots = {}
     def __init__(self):
         self.slots ={
-        'helmet' == None,
-        'chest' == None,
-        'arms' == None,
-        'feet' == None,
-        'shield' == None,
-        'ring' == None
+        'helmet': None,
+        'chest': None,
+        'arms': None,
+        'feet': None,
+        'shield': None,
+        'ring': None
     }
     
     def equip(self, item):
@@ -123,6 +123,17 @@ class Spell:
 my_attack = Spell("Fireball","Fire")
 print(my_attack.use_spell())
 
+#Below will be for inheritance:
+# class Character:
+#     def __init__(self, name, health):
+#         self.name = name
+#         self._health = health
+
+#     def take_damage(self, amount):
+#         self._health = max(0, self._health - amount)
+
+#     def attack(self, target):
+#         pass
 class Hero:
     legend = \
     {
